@@ -1,0 +1,6 @@
+@MedievalAutoBattlerV2_HostAddress = http://localhost:5189
+
+GET {{MedievalAutoBattlerV2_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
