@@ -20,7 +20,7 @@ namespace MedievalAutoBattlerV2.Controllers
         {
             var message = await _adminCardsService.Create(card);
 
-            var result = new Response<AdminCardsCreateResponse>
+            var result = new Response<string>()
             {
                 Message = message
             };

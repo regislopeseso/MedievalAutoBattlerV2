@@ -1,5 +1,4 @@
 ﻿using MedievalAutoBattlerV2.Models.Dtos.Request;
-using MedievalAutoBattlerV2.Models.Dtos.Response;
 using MedievalAutoBattlerV2.Models.Entities;
 using MedievalAutoBattlerV2.Utilities;
 
