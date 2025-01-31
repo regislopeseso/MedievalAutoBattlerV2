@@ -10,7 +10,6 @@ namespace MedievalAutoBattlerV2.Controllers
     public class AdminNpcsController : ControllerBase
     {
         private readonly AdminNpcsService _adminNpcsService;
-
         public AdminNpcsController(AdminNpcsService adminNpcsService)
         {
             this._adminNpcsService = adminNpcsService;
@@ -24,6 +23,20 @@ namespace MedievalAutoBattlerV2.Controllers
             var result = new Response<string>
             {
                 Message = message,
+            };
+
+            return new JsonResult(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Read()
+        {
+            var (response, message) = await _adminNpcsService.Read();
+
+            var result = new Response<List<AdminNpcsReadResponse>>()
+            {
+                Content = response,
+                Message = message
             };
 
             return new JsonResult(result);

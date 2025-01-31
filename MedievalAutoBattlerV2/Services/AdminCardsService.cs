@@ -40,16 +40,16 @@ namespace MedievalAutoBattlerV2.Services
 
         public async Task<(List<AdminCardsReadResponse>, string)> Read()
         {
-            var cardDB = await _daoDbContext.Cards.ToListAsync();
+            var cardsDB = await _daoDbContext.Cards.ToListAsync();
 
-            if (cardDB == null)
+            if (cardsDB == null)
             {
                 return (null, "Error: no cards available");
             }
 
             var response = new List<AdminCardsReadResponse>();
 
-            foreach (var card in cardDB)
+            foreach (var card in cardsDB)
             {
                 if(card.IsDeleted == false)
                 {

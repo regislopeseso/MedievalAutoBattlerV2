@@ -1,4 +1,5 @@
 ﻿using MedievalAutoBattlerV2.Models.Dtos.Request;
+using MedievalAutoBattlerV2.Models.Dtos.Response;
 using MedievalAutoBattlerV2.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
@@ -57,6 +58,33 @@ namespace MedievalAutoBattlerV2.Services
             return "Create action sucessful";
         }
 
-        
+        public async Task<(List<AdminNpcsReadResponse>, string)> Read()
+        {
+            var npcsDB = await _daoDbContext.Npcs.ToListAsync();
+
+            if (npcsDB == null)
+            {
+                return (null, "Error: no NPCs available");
+            }
+
+            var response = new List<AdminNpcsReadResponse>();
+
+            foreach (var npc in npcsDB)
+            {
+                if (npc.IsDeleted == false)
+                {
+                    var n = new AdminNpcsReadResponse
+                    {
+                        Id = npc.Id,
+                        Name = npc.Name,
+                        Description = npc.Description,
+                        Deck = npc.Deck,
+                        Level = npc.Level
+                    };
+                    response.Add(n);
+                }
+            }
+            return (response, "Read Action successful!");
+        }
     }
 }
