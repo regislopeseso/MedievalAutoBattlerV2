@@ -6,7 +6,7 @@ namespace MedievalAutoBattlerV2.Models.Dtos.Request
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<DeckEntry> Decks { get; set; }
+        public List<int> CardsId { get; set; }
         public int Level { get; set; }
     }
 }

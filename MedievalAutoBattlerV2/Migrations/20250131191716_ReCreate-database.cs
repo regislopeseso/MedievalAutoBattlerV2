@@ -15,7 +15,27 @@ namespace MedievalAutoBattlerV2.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Npcs",
+                name: "cards",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Power = table.Column<int>(type: "int", nullable: false),
+                    UpperHand = table.Column<int>(type: "int", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Level = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_cards", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "npcs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -29,33 +49,7 @@ namespace MedievalAutoBattlerV2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Npcs", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "cards",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Power = table.Column<int>(type: "int", nullable: false),
-                    UpperHand = table.Column<int>(type: "int", nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    Level = table.Column<int>(type: "int", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    NpcId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_cards", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_cards_Npcs_NpcId",
-                        column: x => x.NpcId,
-                        principalTable: "Npcs",
-                        principalColumn: "Id");
+                    table.PrimaryKey("PK_npcs", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -65,7 +59,8 @@ namespace MedievalAutoBattlerV2.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CardId = table.Column<int>(type: "int", nullable: false)
+                    CardId = table.Column<int>(type: "int", nullable: false),
+                    NpcId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -76,18 +71,23 @@ namespace MedievalAutoBattlerV2.Migrations
                         principalTable: "cards",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DeckEntries_npcs_NpcId",
+                        column: x => x.NpcId,
+                        principalTable: "npcs",
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_cards_NpcId",
-                table: "cards",
-                column: "NpcId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DeckEntries_CardId",
                 table: "DeckEntries",
                 column: "CardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DeckEntries_NpcId",
+                table: "DeckEntries",
+                column: "NpcId");
         }
 
         /// <inheritdoc />
@@ -100,7 +100,7 @@ namespace MedievalAutoBattlerV2.Migrations
                 name: "cards");
 
             migrationBuilder.DropTable(
-                name: "Npcs");
+                name: "npcs");
         }
     }
 }

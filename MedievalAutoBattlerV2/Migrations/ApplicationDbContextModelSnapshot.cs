@@ -40,9 +40,6 @@ namespace MedievalAutoBattlerV2.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("NpcId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Power")
                         .HasColumnType("int");
 
@@ -53,8 +50,6 @@ namespace MedievalAutoBattlerV2.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("NpcId");
 
                     b.ToTable("cards");
                 });
@@ -70,9 +65,14 @@ namespace MedievalAutoBattlerV2.Migrations
                     b.Property<int>("CardId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("NpcId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CardId");
+
+                    b.HasIndex("NpcId");
 
                     b.ToTable("DeckEntries");
                 });
@@ -101,14 +101,7 @@ namespace MedievalAutoBattlerV2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Npcs");
-                });
-
-            modelBuilder.Entity("MedievalAutoBattlerV2.Models.Entities.Card", b =>
-                {
-                    b.HasOne("MedievalAutoBattlerV2.Models.Entities.Npc", null)
-                        .WithMany("Deck")
-                        .HasForeignKey("NpcId");
+                    b.ToTable("npcs");
                 });
 
             modelBuilder.Entity("MedievalAutoBattlerV2.Models.Entities.DeckEntry", b =>
@@ -118,6 +111,10 @@ namespace MedievalAutoBattlerV2.Migrations
                         .HasForeignKey("CardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("MedievalAutoBattlerV2.Models.Entities.Npc", null)
+                        .WithMany("Deck")
+                        .HasForeignKey("NpcId");
 
                     b.Navigation("Card");
                 });
