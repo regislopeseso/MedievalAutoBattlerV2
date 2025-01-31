@@ -16,12 +16,7 @@ namespace MedievalAutoBattlerV2.Services
         }
 
         public async Task<string> Create(AdminCardsCreateRequest card)
-        {
-            if (card == null)
-            {
-                return "Error: card is null";
-            }
-
+        {         
             var newCard = new Card
             {
                 Name = card.Name,
@@ -35,17 +30,12 @@ namespace MedievalAutoBattlerV2.Services
             this._daoDbContext.Add(newCard);
             await this._daoDbContext.SaveChangesAsync();        
 
-            return "Create action successful";
+            return "Create successful";
         }
 
         public async Task<(List<AdminCardsReadResponse>, string)> Read()
         {
-            var cardsDB = await _daoDbContext.Cards.ToListAsync();
-
-            if (cardsDB == null)
-            {
-                return (null, "Error: no cards available");
-            }
+            var cardsDB = await _daoDbContext.Cards.ToListAsync();         
 
             var response = new List<AdminCardsReadResponse>();
 
@@ -67,7 +57,21 @@ namespace MedievalAutoBattlerV2.Services
                 }
             }            
            
-            return (response, "Read Action successful!");
+            return (response, "Read successful!");
+        }
+
+
+        public async Task<string> Delete(int id)
+        {
+            var cardDB = await _daoDbContext.Cards
+                .Where(a => a.Id == id)
+                .FirstOrDefaultAsync();
+
+            cardDB.IsDeleted = true;
+
+            await this._daoDbContext.SaveChangesAsync();
+
+            return "Delete successful";
         }
     }
 }

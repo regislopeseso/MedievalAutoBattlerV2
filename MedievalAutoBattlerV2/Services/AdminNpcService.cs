@@ -16,12 +16,7 @@ namespace MedievalAutoBattlerV2.Services
         }
 
         public async Task<string> Create(AdminNpcsCreateRequest npc)
-        {
-            if (npc == null)
-            {
-                return "Error: NPC is null";
-            }
-
+        {        
             var newNpc = new Npc
             {
                 Name = npc.Name,
@@ -48,24 +43,15 @@ namespace MedievalAutoBattlerV2.Services
                 }
             }
 
-
-
-
-
             this._daoDbContext.Add(newNpc);
             await this._daoDbContext.SaveChangesAsync();
 
-            return "Create action sucessful";
+            return "Create sucessful";
         }
 
         public async Task<(List<AdminNpcsReadResponse>, string)> Read()
         {
             var npcsDB = await _daoDbContext.Npcs.ToListAsync();
-
-            if (npcsDB == null)
-            {
-                return (null, "Error: no NPCs available");
-            }
 
             var response = new List<AdminNpcsReadResponse>();
 
@@ -84,7 +70,7 @@ namespace MedievalAutoBattlerV2.Services
                     response.Add(n);
                 }
             }
-            return (response, "Read Action successful!");
+            return (response, "Read successful!");
         }
     }
 }
