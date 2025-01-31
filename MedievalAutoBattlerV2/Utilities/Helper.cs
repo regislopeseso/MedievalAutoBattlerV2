@@ -6,7 +6,7 @@ namespace MedievalAutoBattlerV2.Utilities
     {
         public static int GetCardLevel(AdminCardsCreateRequest card)
         {
-            return (newCard.Power + newCard.UpperHand)/2;
+            return (card.Power + card.UpperHand)/2;
         }
     }
 }

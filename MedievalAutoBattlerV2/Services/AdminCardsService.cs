@@ -2,8 +2,6 @@
 using MedievalAutoBattlerV2.Models.Dtos.Response;
 using MedievalAutoBattlerV2.Models.Entities;
 using MedievalAutoBattlerV2.Utilities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace MedievalAutoBattlerV2.Services
 {
@@ -16,28 +14,27 @@ namespace MedievalAutoBattlerV2.Services
             this._daoDbContext = daoDbContext;
         }
 
-        public async Task<(AdminCardsCreateResponse, string)> Create(AdminCardsCreateRequest card)
+        public async Task<string> Create(AdminCardsCreateRequest card)
         {
-            if(card == null)
+            if (card == null)
             {
-                return (null, "Error: card is null");
+                return "Error: card is null";
             }
 
-            var newCard = new AdminCardsCreateResponse
+            var newCard = new Card
             {
                 Name = card.Name,
                 Power = card.Power,
                 UpperHand = card.UpperHand,
-                Level = Helper.GetCardLevel(card),
                 Type = card.Type,
+                Level = Helper.GetCardLevel(card),
                 IsDeleted = false
             };
 
             this._daoDbContext.Add(newCard);
-            this._daoDbContext.SaveChangesAsync();
+            await this._daoDbContext.SaveChangesAsync();        
 
-            return (newCard, "Create action successful");
+            return "Create action successful";
         }
     }
 }
-    
