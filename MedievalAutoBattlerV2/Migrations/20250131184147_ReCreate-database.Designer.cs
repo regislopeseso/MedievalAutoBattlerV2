@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MedievalAutoBattlerV2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250131182314_Create-NPC_table_and_DeckEntries_table")]
-    partial class CreateNPC_table_and_DeckEntries_table
+    [Migration("20250131184147_ReCreate-database")]
+    partial class ReCreatedatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -91,6 +91,9 @@ namespace MedievalAutoBattlerV2.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("Level")
                         .HasColumnType("int");
