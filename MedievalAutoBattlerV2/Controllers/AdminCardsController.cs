@@ -54,5 +54,18 @@ namespace MedievalAutoBattlerV2.Controllers
 
             return new JsonResult(result);
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(AdminCardsUpdateRequest card)
+        {
+            var message = await _adminCardsService.Update(card);
+
+            var result = new Response<string>()
+            {
+                Message = message
+            };
+
+            return new JsonResult(result);
+        }
     }
 }

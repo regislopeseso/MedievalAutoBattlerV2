@@ -16,7 +16,7 @@ namespace MedievalAutoBattlerV2.Services
         }
 
         public async Task<string> Create(AdminNpcsCreateRequest npc)
-        {        
+        {
             var newNpc = new Npc
             {
                 Name = npc.Name,
@@ -59,18 +59,30 @@ namespace MedievalAutoBattlerV2.Services
             {
                 if (npc.IsDeleted == false)
                 {
-                    var n = new AdminNpcsReadResponse
+                    response.Add(new AdminNpcsReadResponse
                     {
                         Id = npc.Id,
                         Name = npc.Name,
                         Description = npc.Description,
                         Deck = npc.Deck,
                         Level = npc.Level
-                    };
-                    response.Add(n);
+                    });
                 }
             }
             return (response, "Read successful!");
+        }
+
+        public async Task<string> Delete(int id)
+        {
+            var npcdDB = await _daoDbContext.Npcs
+                .Where(a => a.Id == id)
+                .FirstOrDefaultAsync();
+
+            npcdDB.IsDeleted = true;
+
+            await this._daoDbContext.SaveChangesAsync();
+
+            return "Delete successful";
         }
     }
 }

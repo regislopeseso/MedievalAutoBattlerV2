@@ -1,12 +1,11 @@
-﻿using MedievalAutoBattlerV2.Models.Dtos.Request;
-
+﻿
 namespace MedievalAutoBattlerV2.Utilities
 {
     public class Helper
     {
-        public static int GetCardLevel(AdminCardsCreateRequest card)
+        public static int GetCardLevel(int power, int upperhand)
         {
-            return (card.Power + card.UpperHand)/2;
+            return (power + upperhand) /2;
         }
     }
 }

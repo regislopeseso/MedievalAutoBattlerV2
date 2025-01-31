@@ -41,5 +41,18 @@ namespace MedievalAutoBattlerV2.Controllers
 
             return new JsonResult(result);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var message = await _adminNpcsService.Delete(id);
+
+            var result = new Response<string>()
+            {
+                Message = message
+            };
+
+            return new JsonResult(result);
+        }
     }
 }
