@@ -1,6 +1,8 @@
 ﻿using MedievalAutoBattlerV2.Models.Dtos.Request;
+using MedievalAutoBattlerV2.Models.Dtos.Response;
 using MedievalAutoBattlerV2.Models.Entities;
 using MedievalAutoBattlerV2.Utilities;
+using Microsoft.EntityFrameworkCore;
 
 namespace MedievalAutoBattlerV2.Services
 {
@@ -34,6 +36,38 @@ namespace MedievalAutoBattlerV2.Services
             await this._daoDbContext.SaveChangesAsync();        
 
             return "Create action successful";
+        }
+
+        public async Task<(List<AdminCardsReadResponse>, string)> Read()
+        {
+            var cardDB = await _daoDbContext.Cards.ToListAsync();
+
+            if (cardDB == null)
+            {
+                return (null, "Error: no cards available");
+            }
+
+            var response = new List<AdminCardsReadResponse>();
+
+            foreach (var card in cardDB)
+            {
+                if(card.IsDeleted == false)
+                {
+                    var c = new AdminCardsReadResponse
+                    {
+                        Id = card.Id,
+                        Name = card.Name,
+                        Power = card.Power,
+                        UpperHand = card.UpperHand,
+                        Type = card.Type,
+                        Level = card.Level
+                    };
+
+                    response.Add(c);
+                }
+            }            
+           
+            return (response, "Read Action successful!");
         }
     }
 }

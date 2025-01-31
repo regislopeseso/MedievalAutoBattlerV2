@@ -27,5 +27,19 @@ namespace MedievalAutoBattlerV2.Controllers
 
             return new JsonResult(result);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Read()
+        {
+            var (response, message) = await _adminCardsService.Read();
+
+            var result = new Response<List<AdminCardsReadResponse>>()
+            {
+                Content = response,
+                Message = message
+            };
+
+            return new JsonResult(result);
+        }
     }
 }
