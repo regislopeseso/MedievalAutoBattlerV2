@@ -18,9 +18,8 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Models\Dtos\Response\" />
     <Folder Include="Models\Dtos\Request\" />
-    <Folder Include="Models\Enums\" />
+    <Folder Include="Models\Dtos\Response\" />
     <Folder Include="Services\" />
     <Folder Include="Utilities\" />
   </ItemGroup>
